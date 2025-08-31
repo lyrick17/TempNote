@@ -1,0 +1,68 @@
+@use "tailwindcss";
+@use 'ngx-toastr/toastr';
+@import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+$bgColor_light: #CCE3DE;
+$textColor_light: #252627; // Eerie Black
+$primaryColor_light: #6B9080;
+$primaryColor_light_hover: #557566;
+$secondaryColor_light: #A4C3B2;
+$tertiaryColor_light: #F6FFF8;
+$blue_light: #1B2F53;
+$blue_light_hover: #152544;
+$red_light: #8b0000;
+
+$bgColor_dark: #243533;
+$textColor_dark: #DCEFE6;
+$primaryColor_dark: #46645A;
+$primaryColor_dark_hover: #577A6E;
+$secondaryColor_dark: #32463D;
+$tertiaryColor_dark: #1A2220;
+$blue_dark: #4A6FB3;
+$blue_dark_hover: #5786D1;
+$red_dark: #b22222;
+
+
+@mixin lighten() {
+  --bgColor: #{$bgColor_light};
+  --textColor: #{$textColor_light};
+  --primaryColor: #{$primaryColor_light};
+  --primaryHoveredColor: #{$primaryColor_light_hover};
+  --secondaryColor: #{$secondaryColor_light};
+  --translucentSecondaryColor: #{rgba($secondaryColor_light, 0.8)};
+  --tertiaryColor: #{$tertiaryColor_light};
+  --blueColor: #{$blue_light};
+  --blueHoveredColor: #{$blue_light_hover};
+  --redColor: #{$red_light};
+  --borderColor: #{$primaryColor_light};
+}
+
+// mixin that enables css variables in dark mode
+@mixin darken() {
+  --bgColor: #{$bgColor_dark};
+  --textColor: #{$textColor_dark};
+  --primaryColor: #{$primaryColor_dark};
+  --primaryHoveredColor: #{$primaryColor_dark_hover};
+  --secondaryColor: #{$secondaryColor_dark};
+  --translucentSecondaryColor: #{rgba($secondaryColor_dark, 0.8)};
+  --tertiaryColor: #{$tertiaryColor_dark};
+  --blueColor: #{$blue_dark};
+  --blueHoveredColor: #{$blue_dark_hover};
+  --redColor: #{$red_dark};
+  --borderColor: #{$primaryColor_dark};
+}
+
+body {
+  font-family: "Sour Gummy", sans-serif;
+}
+
+body.dark {
+  @include darken();
+  background-color: var(--bgColor);
+  color: var(--textColor);
+}
+body.light {
+  @include lighten();
+  background-color: var(--bgColor);
+  color: var(--textColor);
+}
