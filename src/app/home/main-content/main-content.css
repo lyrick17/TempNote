@@ -1,0 +1,13 @@
+
+
+.primary-color:hover {
+    background-color: var(--primaryHoveredColor);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.blue-color:hover {
+    background-color: var(--blueHoveredColor);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
