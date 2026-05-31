@@ -7,6 +7,4 @@ import { ThemeToggle } from './theme-toggle/theme-toggle';
   imports: [CommonModule, ThemeToggle],
   exports: [ThemeToggle],
 })
-export class Lib {
-
-}
+export class Lib {}
