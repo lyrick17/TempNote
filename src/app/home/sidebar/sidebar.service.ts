@@ -22,8 +22,9 @@ export class SidebarService {
     effect(() => {
       const text = stripHtml(this.currentNote().content);
       const content = text ? this.currentNote().content : '';
+      const title = this.currentNote().title ?? '';
 
-      if (!this.currentNote().id && content) {
+      if (!this.currentNote().id && (content || title)) {
         // Current Note is newly created, and has content
         const newId = this.incrementAndReturnId();
         this.currentNote.update((n) => ({
@@ -31,15 +32,25 @@ export class SidebarService {
           id: newId,
           text,
           content,
+          title,
         }));
-        this.updateNote(newId, text, content);
+        this.updateNote(newId, text, content, title);
       } else if (this.currentNote().id) {
         // Note is being updated
         // Find the note then update its text, unless its empty, delete it instead
-        if (text && content) {
-          this.updateNote(this.currentNote().id!, text, content);
-        } else if (this.currentNoteRef.text && this.currentNoteRef.content) {
-          this.deleteNote({ id: this.currentNote().id, text, content }, true);
+        console.log('Text', text);
+        console.log('Content', content);
+        console.log('Title', title);
+        if ((text && content) || title) {
+          this.updateNote(this.currentNote().id!, text, content, title);
+        } else if (
+          (this.currentNoteRef.text && this.currentNoteRef.content) ||
+          this.currentNoteRef.title
+        ) {
+          this.deleteNote(
+            { id: this.currentNote().id, text, content, title },
+            true,
+          );
         }
       }
     });
@@ -50,12 +61,12 @@ export class SidebarService {
     return this.latestId;
   }
 
-  updateNote(id: number, text: string, content: string) {
+  updateNote(id: number, text: string, content: string, title: string) {
     this.notes.update((n) => ({
       ...n,
-      [id]: { id, text, content },
+      [id]: { id, text, content, title },
     }));
-    this.currentNoteRef = { id, text, content };
+    this.currentNoteRef = { id, text, content, title };
   }
 
   createNewNote(shouldNotify: boolean = true) {
@@ -84,11 +95,12 @@ export class SidebarService {
     this.notes.update((n) => ({
       ...newNotes,
     }));
-    if (isAutomatic) {
-      this.toastr.info('Note removed.');
-    } else {
+    if (!isAutomatic) {
       this.toastr.info('Note deleted.');
     }
+    // else {
+    //   this.toastr.info('Note removed.');
+    // }
   }
 
   hasNotes(): boolean {

@@ -1,23 +1,36 @@
 <article
   class="mx-1 my-2 md:my-0 p-4 flex flex-col items-end rounded-md secondary-color shadow-xl"
 >
-  <button
-    (click)="createNewNote()"
-    class="primary-color rounded-md px-4 py-2 mb-2"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 448 512"
+  <section class="flex justify-between w-full mb-2">
+    <input
+      type="text"
+      [(ngModel)]="notes.currentNote().title"
+      (ngModelChange)="onTitleInput($event)"
+      class="border-b w-75 placeholder:text-grey-400 focus:outline-none focus:ring-0 px-2"
+      [class]="
+        themeToggleService.currentTheme === themes.DARK
+          ? 'text-[#252627] bg-[#f6fff8] border-gray-200 rounded-md'
+          : ''
+      "
+      placeholder="Enter note title here..."
+    />
+    <button
+      (click)="createNewNote()"
+      class="primary-color rounded-md px-4 py-2"
     >
-      <path
-        d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-        fill="var(--textColor)"
-      />
-    </svg>
-  </button>
-  <p>title</p>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 448 512"
+      >
+        <path
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+          fill="var(--textColor)"
+        />
+      </svg>
+    </button>
+  </section>
   <text-editor
     [(value)]="notes.currentNote().text"
     (valueChange)="onTextInput($event)"
@@ -33,10 +46,10 @@
     (input)="onTextInput($event)"
   ></textarea> -->
   <div class="py-1">
-    <small class="italic"
-      >Note: All notes written in TempNote will not be saved once you close the
-      site. Please export the notes when necessary.</small
-    >
+    <small class="italic">
+      Note: All notes written in TempNote will not be saved once you close the
+      site. Please export the notes when necessary.
+    </small>
   </div>
   <button
     (click)="downloadNoteAsTextFile()"

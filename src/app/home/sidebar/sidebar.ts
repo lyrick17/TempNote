@@ -7,14 +7,12 @@ import { NoteItem } from './sidebar.model';
   selector: 'app-sidebar',
   imports: [CommonModule],
   templateUrl: './sidebar.html',
-  styleUrls: ['./sidebar.css', '../../lib/shared/styles.css']
+  styleUrls: ['./sidebar.css', '../../lib/shared/styles.css'],
 })
 export class Sidebar {
-  
   notes = inject(SidebarService);
 
   onClickNote(item: NoteItem) {
-    console.log("tf");
     const id = item.id;
     if (!id) return;
     if (id == this.notes.currentNote().id) {
@@ -23,7 +21,7 @@ export class Sidebar {
     }
     this.notes.currentNote.set(this.notes.notes()[id]);
   }
-  
+
   onDeleteNote(item: NoteItem, event: Event) {
     event.stopPropagation();
     this.notes.deleteNote(item);
