@@ -2,32 +2,44 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SidebarService } from '../sidebar/sidebar.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { TextEditor } from '../../lib/text-editor/text-editor';
+import { ThemeToggleService } from '../../lib/theme-toggle/theme-toggle.service';
+import { Lib } from '../../lib/lib';
+import { Theme } from '../../lib/theme-toggle/theme-toggle.model';
+import { stripHtml } from '../../lib/shared/utils';
 
 @Component({
   selector: 'app-main-content',
-  imports: [FormsModule],
+  imports: [FormsModule, TextEditor],
   templateUrl: './main-content.html',
-  styleUrls: ['./main-content.css', '../../lib/shared/styles.css']
+  styleUrls: ['./main-content.css', '../../lib/shared/styles.css'],
 })
 export class MainContent {
-
   notes = inject(SidebarService);
   toastr = inject(ToastrService);
+  themeToggleService = inject(ThemeToggleService);
+  themes = Theme;
 
-  onTextInput(event: Event) {
-    const value = (event.target as HTMLTextAreaElement).value;
-    this.notes.currentNote.update(n => ({
+  onTextInput(value: string) {
+    this.notes.currentNote.update((n) => ({
       ...n,
-      text: value
+      content: value,
+    }));
+  }
+
+  onTitleInput(value: string) {
+    this.notes.currentNote.update((n) => ({
+      ...n,
+      title: value,
     }));
   }
 
   createNewNote() {
-    if (!this.notes.currentNote().text) {
+    if (!this.notes.currentNote().text && !this.notes.currentNote().title) {
       // Do not create a new note if there is no text on the current note
       return;
     }
+
     this.notes.createNewNote();
   }
 
@@ -36,7 +48,9 @@ export class MainContent {
       this.toastr.error('Unable to download an empty note.');
       return;
     }
-    const blob = new Blob([this.notes.currentNote().text], {type: 'text/plain'});
+    const blob = new Blob([stripHtml(this.notes.currentNote().text)], {
+      type: 'text/plain',
+    });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -47,4 +61,4 @@ export class MainContent {
     a.remove();
     window.URL.revokeObjectURL(url);
   }
-} 
+}
