@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tempnote-frontend-dev
+    container_name: tempnote-dev
+    ports:
+      - "4200:4200"
+    restart: "no"
+    volumes:
+      - .:/app
+      - /app/node_modules

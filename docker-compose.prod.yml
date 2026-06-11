@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: tempnote-frontend-prod
+    container_name: tempnote-prod
+    ports:
+      - "80:80"
+    restart: unless-stopped
