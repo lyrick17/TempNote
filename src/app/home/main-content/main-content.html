@@ -32,7 +32,7 @@
     </button>
   </section>
   <text-editor
-    [(value)]="notes.currentNote().text"
+    [(value)]="notes.currentNote().content"
     (valueChange)="onTextInput($event)"
     class="w-full border tertiary-color border-color rounded"
   ></text-editor>
