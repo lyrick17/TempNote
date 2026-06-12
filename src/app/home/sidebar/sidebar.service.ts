@@ -21,7 +21,12 @@ export class SidebarService {
   initializeEffect() {
     effect(() => {
       const text = stripHtml(this.currentNote().content);
-      const content = text ? this.currentNote().content : '';
+
+      const isValidContent =
+        !!text ||
+        this.currentNote().content.includes('</ol>') ||
+        this.currentNote().content.includes('</ul>');
+      const content = isValidContent ? this.currentNote().content : '';
       const title = this.currentNote().title ?? '';
 
       if (!this.currentNote().id && (content || title)) {
@@ -41,7 +46,7 @@ export class SidebarService {
         console.log('Text', text);
         console.log('Content', content);
         console.log('Title', title);
-        if ((text && content) || title) {
+        if (content || title) {
           this.updateNote(this.currentNote().id!, text, content, title);
         } else if (
           (this.currentNoteRef.text && this.currentNoteRef.content) ||

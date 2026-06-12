@@ -92,9 +92,39 @@ body.light {
     font-size: 1rem;
     font-weight: 700;
   }
+  ol {
+    list-style-type: revert;
+    margin: revert;
+    padding-left: revert;
+  }
+  ul {
+    list-style-type: revert;
+    margin: revert;
+    padding-left: revert;
+  }
   min-height: 13rem;
 }
 
 .NgxEditor__MenuBar {
   background-color: var(--bgColor) !important;
+}
+
+.NgxEditor__Dropdown,
+.NgxEditor__Dropdown--Selected {
+  border-radius: 3px !important;
+  transition: all ease-in-out;
+  transition-duration: 200ms;
+}
+.NgxEditor__Dropdown--DropdownMenu {
+  overflow: hidden;
+}
+
+.NgxEditor__Dropdown--Item {
+  color: #252627 !important;
+}
+
+.NgxEditor__MenuItem:hover,
+.NgxEditor__Dropdown:hover {
+  color: #252627 !important;
+  cursor: pointer;
 }
