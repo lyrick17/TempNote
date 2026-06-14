@@ -55,6 +55,6 @@ export class TextEditor implements OnInit, OnDestroy {
 
   // make sure to destory the editor
   ngOnDestroy(): void {
-    this.editor.destroy();
+    this.editor?.destroy();
   }
 }

@@ -4,6 +4,7 @@
   <section class="flex justify-between w-full mb-2">
     <div class="flex gap-3 items-center">
       <input
+        name="title"
         type="text"
         [(ngModel)]="notes.currentNote().title"
         (ngModelChange)="onTitleInput($event)"
@@ -16,6 +17,7 @@
         placeholder="Enter note title here..."
       />
       <button
+        name="copy-note"
         (click)="copyNote()"
         class="flex gap-1 items-center blue-color text-white text-xs rounded-md px-2 py-1 disabled:opacity-50 disabled:pointer-events-none"
         [disabled]="
@@ -28,6 +30,7 @@
       </button>
     </div>
     <button
+      name="add-note"
       (click)="createNewNote()"
       class="primary-color rounded-md px-4 py-2"
     >
@@ -41,8 +44,6 @@
   ></text-editor>
   <div class="py-1">
     <small class="italic">
-      <!-- Note: All notes written in TempNote will not be saved once you close the
-      site. Please export the notes when necessary. -->
       Note: All notes written in TempNote will not be saved once you close the
       site.
     </small>
