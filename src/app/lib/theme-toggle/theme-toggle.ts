@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ThemeToggleService } from './theme-toggle.service';
 import { Theme } from './theme-toggle.model';
+import { Icons } from '../icons';
 
 @Component({
   selector: 'app-theme-toggle',
-  imports: [],
+  imports: [...Icons],
   templateUrl: './theme-toggle.html',
   styleUrl: './theme-toggle.css',
 })

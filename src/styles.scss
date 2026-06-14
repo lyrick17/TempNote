@@ -8,8 +8,10 @@ $primaryColor_light: #6b9080;
 $primaryColor_light_hover: #557566;
 $secondaryColor_light: #a4c3b2;
 $tertiaryColor_light: #f6fff8;
-$blue_light: #1b2f53;
-$blue_light_hover: #152544;
+// $blue_light: #1b2f53;
+// $blue_light_hover: #152544;
+$blue_light: #4a6fb3;
+$blue_light_hover: #5786d1;
 $red_light: #8b0000;
 
 $bgColor_dark: #243533;
@@ -92,9 +94,65 @@ body.light {
     font-size: 1rem;
     font-weight: 700;
   }
+  ol {
+    list-style-type: revert;
+    margin: revert;
+    padding-left: revert;
+  }
+  ul {
+    list-style-type: revert;
+    margin: revert;
+    padding-left: revert;
+  }
+  a {
+    color: revert;
+    text-decoration: revert;
+  }
   min-height: 13rem;
 }
 
 .NgxEditor__MenuBar {
   background-color: var(--bgColor) !important;
+}
+
+.NgxEditor__Dropdown,
+.NgxEditor__Dropdown--Selected {
+  border-radius: 3px !important;
+  transition: all ease-in-out;
+  transition-duration: 200ms;
+}
+.NgxEditor__Dropdown--DropdownMenu {
+  overflow: hidden;
+}
+
+.NgxEditor__Dropdown--Item,
+.NgxEditor__Popup--FormGroup {
+  color: #{$textColor_light} !important;
+}
+
+.NgxEditor__MenuItem:hover,
+.NgxEditor__Dropdown:hover {
+  color: #{$textColor_light} !important;
+  cursor: pointer;
+}
+
+.NgxEditor__Popup--Col > input {
+  color: #{$textColor_light};
+  background-color: #{$tertiaryColor_light};
+  border: 1px solid #364153 !important; // border-grey-700
+  border-radius: 0.375rem; // rounded-md
+}
+
+.NgxEditor__Popup--Form > button,
+.NgxEditor__MenuItem--Button {
+  background-color: #{$primaryColor_light};
+  padding: 3px 5px;
+  border-radius: 0.375rem;
+  color: #{$tertiaryColor_light};
+  cursor: pointer;
+}
+
+.NgxEditor__Popup--Form > button:hover,
+.NgxEditor__MenuItem--Button:hover {
+  background-color: #{$primaryColor_light_hover};
 }
