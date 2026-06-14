@@ -43,6 +43,7 @@ export class MainContent {
     this.notes.createNewNote();
   }
 
+  //! Deprecated: Export Feature is removed for now as of v2.2
   downloadNoteAsTextFile() {
     if (!this.notes.currentNote().text) {
       this.toastr.error('Unable to download an empty note.');
