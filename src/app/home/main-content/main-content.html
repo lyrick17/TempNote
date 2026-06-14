@@ -2,18 +2,31 @@
   class="mx-1 my-2 md:my-0 p-4 flex flex-col items-end rounded-md secondary-color shadow-xl"
 >
   <section class="flex justify-between w-full mb-2">
-    <input
-      type="text"
-      [(ngModel)]="notes.currentNote().title"
-      (ngModelChange)="onTitleInput($event)"
-      class="border-b w-75 placeholder:text-grey-400 focus:outline-none focus:ring-0 px-2"
-      [class]="
-        themeToggleService.currentTheme === themes.DARK
-          ? 'text-[#252627] bg-[#f6fff8] border-gray-200 rounded-md'
-          : ''
-      "
-      placeholder="Enter note title here..."
-    />
+    <div class="flex gap-3 items-center">
+      <input
+        type="text"
+        [(ngModel)]="notes.currentNote().title"
+        (ngModelChange)="onTitleInput($event)"
+        class="border-b w-75 placeholder:text-grey-400 focus:outline-none focus:ring-0 px-2"
+        [class]="
+          themeToggleService.currentTheme === themes.DARK
+            ? 'text-[#252627] bg-[#f6fff8] border-gray-200 rounded-md'
+            : ''
+        "
+        placeholder="Enter note title here..."
+      />
+      <button
+        (click)="copyNote()"
+        class="flex gap-1 items-center blue-color text-white text-xs rounded-md px-2 py-1 disabled:opacity-50 disabled:pointer-events-none"
+        [disabled]="
+          notes.currentNote().text.length <= 0 ||
+          notes.currentNote().content.length <= 0
+        "
+      >
+        <app-clipboard-icon />
+        Copy
+      </button>
+    </div>
     <button
       (click)="createNewNote()"
       class="primary-color rounded-md px-4 py-2"

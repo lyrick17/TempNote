@@ -1,3 +1,4 @@
+import { ClipboardIcon } from './clipboard';
 import { DeleteIcon } from './delete-icon';
 import { DownloadIcon } from './download-icon';
 import { FileIcon } from './file-icon';
@@ -16,4 +17,5 @@ export const Icons = [
   FileIcon,
   FileTextIcon,
   FileImageIcon,
+  ClipboardIcon,
 ] as const;

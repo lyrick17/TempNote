@@ -43,6 +43,36 @@ export class MainContent {
     this.notes.createNewNote();
   }
 
+  copyNote() {
+    if (
+      this.notes.currentNote().content.length <= 0 ||
+      this.notes.currentNote().text.length <= 0
+    ) {
+      return;
+    }
+
+    try {
+      const htmlBlob = new Blob([this.notes.currentNote().content], {
+        type: 'text/html',
+      });
+      const textBlob = new Blob([this.notes.currentNote().text], {
+        type: 'text/plain',
+      });
+
+      const data = [
+        new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob,
+        }),
+      ];
+
+      navigator.clipboard.write(data);
+      this.toastr.success('Copied!');
+    } catch (e) {
+      this.toastr.error('Unable to copy the note. Please try again.');
+    }
+  }
+
   //! Deprecated: Export Feature is removed for now as of v2.2
   downloadNoteAsTextFile() {
     if (!this.notes.currentNote().text) {

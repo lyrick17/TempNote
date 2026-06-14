@@ -8,7 +8,7 @@
       class="cursor-pointer flex items-center justify-between rounded-md p-2 mb-1"
       (click)="onClickNote(item)"
     >
-      <div class="flex gap-1 items-center">
+      <div class="flex gap-1 items-center truncate text-ellipsis">
         @if (item.type == "combined" || item.type == "") {
           <app-file-icon />
         } @else if (item.type == "text") {
@@ -16,7 +16,7 @@
         } @else {
           <app-file-image-icon />
         }
-        <span class="truncate text-ellipsis">
+        <span class="">
           {{
             item.title ||
               item.text ||
