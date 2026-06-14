@@ -6,7 +6,7 @@ Consider that the notes entered in the site will be erased once closed.
 
 ---
 
-version 2.1: https://temp-note.netlify.app/
+version 2.2: https://temp-note.netlify.app/
 
 version 1.0: https://lyrick17.github.io/TempNote/
 
