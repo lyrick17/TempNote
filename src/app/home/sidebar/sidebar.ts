@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { SidebarService } from './sidebar.service';
 import { CommonModule } from '@angular/common';
 import { NoteItem } from './sidebar.model';
+import { Icons } from '../../lib/icons';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule],
+  imports: [CommonModule, ...Icons],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.css', '../../lib/shared/styles.css'],
 })
@@ -24,6 +25,6 @@ export class Sidebar {
 
   onDeleteNote(item: NoteItem, event: Event) {
     event.stopPropagation();
-    this.notes.deleteNote(item);
+    this.notes.deleteNote(item.id);
   }
 }

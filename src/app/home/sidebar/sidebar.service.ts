@@ -20,14 +20,15 @@ export class SidebarService {
 
   initializeEffect() {
     effect(() => {
-      const text = stripHtml(this.currentNote().content);
-
+      const text = stripHtml(this.currentNote().content).trim();
       const isValidContent =
         !!text ||
         this.currentNote().content.includes('</ol>') ||
-        this.currentNote().content.includes('</ul>');
+        this.currentNote().content.includes('</ul>') ||
+        this.currentNote().content.includes('<img src=');
       const content = isValidContent ? this.currentNote().content : '';
       const title = this.currentNote().title ?? '';
+      const type = this.determineNoteType({ text, content, title });
 
       if (!this.currentNote().id && (content || title)) {
         // Current Note is newly created, and has content
@@ -38,24 +39,19 @@ export class SidebarService {
           text,
           content,
           title,
+          type,
         }));
-        this.updateNote(newId, text, content, title);
+        this.updateNote(newId, text, content, title, type);
       } else if (this.currentNote().id) {
         // Note is being updated
         // Find the note then update its text, unless its empty, delete it instead
-        console.log('Text', text);
-        console.log('Content', content);
-        console.log('Title', title);
         if (content || title) {
-          this.updateNote(this.currentNote().id!, text, content, title);
+          this.updateNote(this.currentNote().id!, text, content, title, type);
         } else if (
           (this.currentNoteRef.text && this.currentNoteRef.content) ||
           this.currentNoteRef.title
         ) {
-          this.deleteNote(
-            { id: this.currentNote().id, text, content, title },
-            true,
-          );
+          this.deleteNote(this.currentNote().id, true);
         }
       }
     });
@@ -66,12 +62,40 @@ export class SidebarService {
     return this.latestId;
   }
 
-  updateNote(id: number, text: string, content: string, title: string) {
+  determineNoteType({
+    title,
+    content,
+    text,
+  }: {
+    title: string;
+    content: string;
+    text: string;
+  }) {
+    // Determine Note Type after getting the note contents;
+    if (text.length > 0 && content.length > 0 && content.includes('img src')) {
+      return 'combined';
+    } else if (text.length > 0) {
+      return 'text';
+    } else if (content.length > 0 && content.includes('img src')) {
+      return 'image';
+    } else if (title) {
+      return 'text';
+    }
+    return '';
+  }
+
+  updateNote(
+    id: number,
+    text: string,
+    content: string,
+    title: string,
+    type: '' | 'combined' | 'text' | 'image',
+  ) {
     this.notes.update((n) => ({
       ...n,
-      [id]: { id, text, content, title },
+      [id]: { id, text, content, title, type },
     }));
-    this.currentNoteRef = { id, text, content, title };
+    this.currentNoteRef = { id, text, content, title, type };
   }
 
   createNewNote(shouldNotify: boolean = true) {
@@ -83,20 +107,20 @@ export class SidebarService {
     this.currentNoteRef = { ...noteItemTemp };
   }
 
-  deleteNote(item: NoteItem, isAutomatic: boolean = false) {
-    if (!item.id) {
+  deleteNote(itemId?: number | null, isAutomatic: boolean = false) {
+    if (!itemId) {
       this.toastr.info('An error occured.');
       return;
     }
 
     // If the note to be deleted is current one, remove it
-    if (this.currentNote().id == item.id) {
+    if (this.currentNote().id == itemId) {
       this.createNewNote(false);
     }
 
     // remove the note from the map
     let newNotes = { ...this.notes() };
-    delete newNotes[item.id];
+    delete newNotes[itemId];
     this.notes.update((n) => ({
       ...newNotes,
     }));

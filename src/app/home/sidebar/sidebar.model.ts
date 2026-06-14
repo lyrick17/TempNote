@@ -3,6 +3,7 @@ export interface NoteItem {
   title?: string;
   text: string;
   content: string;
+  type: 'text' | 'image' | 'combined' | '';
 }
 
 export const noteItemTemp: NoteItem = {
@@ -10,4 +11,5 @@ export const noteItemTemp: NoteItem = {
   title: '',
   text: '',
   content: '',
+  type: '',
 };
