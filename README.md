@@ -6,7 +6,7 @@ Consider that the notes entered in the site will be erased once closed.
 
 ---
 
-version 2.2: https://temp-note.netlify.app/
+version 2.3: https://temp-note.netlify.app/
 
 version 1.0: https://lyrick17.github.io/TempNote/
 
@@ -16,7 +16,7 @@ version 1.0: https://lyrick17.github.io/TempNote/
 
 I used this app to also learn docker, so expect some mistakes.
 
-```
+```bash
 docker-compose -f docker-compose.<env>.yml up
 
 # run in background

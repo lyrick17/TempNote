@@ -2,13 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { SidebarService } from './sidebar.service';
 import { CommonModule } from '@angular/common';
 import { NoteItem } from './sidebar.model';
-import { Icons } from '../../lib/icons';
+import { Icons } from '../../../../shared/components/icons';
 
 @Component({
   selector: 'app-sidebar',
   imports: [CommonModule, ...Icons],
   templateUrl: './sidebar.html',
-  styleUrls: ['./sidebar.css', '../../lib/shared/styles.css'],
+  styleUrls: ['./sidebar.css'],
 })
 export class Sidebar {
   notes = inject(SidebarService);

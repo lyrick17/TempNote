@@ -1,7 +1,7 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { NoteItem, noteItemTemp } from './sidebar.model';
 import { ToastrService } from 'ngx-toastr';
-import { stripHtml } from '../../lib/shared/utils';
+import { stripHtml } from '../../../../utils/utils';
 
 @Injectable({
   providedIn: 'root',

@@ -2,22 +2,22 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SidebarService } from '../sidebar/sidebar.service';
 import { ToastrService } from 'ngx-toastr';
-import { TextEditor } from '../../lib/text-editor/text-editor';
-import { ThemeToggleService } from '../../lib/theme-toggle/theme-toggle.service';
-import { Theme } from '../../lib/theme-toggle/theme-toggle.model';
-import { stripHtml } from '../../lib/shared/utils';
-import { Icons } from '../../lib/icons';
+import { TextEditor } from '../text-editor/text-editor';
+import { ThemeService } from '../../../../core/services/theme.service';
+import { Theme } from '../../../../core/types/theme-toggle.type';
+import { stripHtml } from '../../../../utils/utils';
+import { Icons } from '../../../../shared/components/icons';
 
 @Component({
   selector: 'app-main-content',
   imports: [FormsModule, TextEditor, ...Icons],
   templateUrl: './main-content.html',
-  styleUrls: ['./main-content.css', '../../lib/shared/styles.css'],
+  styleUrls: ['./main-content.css'],
 })
 export class MainContent {
   notes = inject(SidebarService);
   toastr = inject(ToastrService);
-  themeToggleService = inject(ThemeToggleService);
+  themeService = inject(ThemeService);
   themes = Theme;
 
   onTextInput(value: string) {

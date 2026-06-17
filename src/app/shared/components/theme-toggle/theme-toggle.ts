@@ -1,19 +1,20 @@
 import { Component, inject } from '@angular/core';
-import { ThemeToggleService } from './theme-toggle.service';
-import { Theme } from './theme-toggle.model';
+import { ThemeService } from '../../../core/services/theme.service';
+import { Theme } from '../../../core/types/theme-toggle.type';
 import { Icons } from '../icons';
 
 @Component({
   selector: 'app-theme-toggle',
+  standalone: true,
   imports: [...Icons],
   templateUrl: './theme-toggle.html',
   styleUrl: './theme-toggle.css',
 })
 export class ThemeToggle {
-  themeToggleService = inject(ThemeToggleService);
+  themeService = inject(ThemeService);
   themes = Theme;
 
   toggle() {
-    this.themeToggleService.toggleTheme();
+    this.themeService.toggleTheme();
   }
 }

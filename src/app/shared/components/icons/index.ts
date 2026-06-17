@@ -1,4 +1,4 @@
-import { ClipboardIcon } from './clipboard';
+import { ClipboardIcon } from './clipboard-icon';
 import { DeleteIcon } from './delete-icon';
 import { DownloadIcon } from './download-icon';
 import { FileIcon } from './file-icon';
