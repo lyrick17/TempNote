@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SidebarService } from '../sidebar/sidebar.service';
 import { ToastrService } from 'ngx-toastr';
 import { TextEditor } from '../text-editor/text-editor';
 import { ThemeService } from '../../../../core/services/theme.service';
 import { Theme } from '../../../../core/types/theme-toggle.type';
 import { stripHtml } from '../../../../utils/utils';
 import { Icons } from '../../../../shared/components/icons';
+import { ScratchpadNotes } from '../../services/scratchpad-notes';
 
 @Component({
   selector: 'app-main-content',
@@ -15,7 +15,7 @@ import { Icons } from '../../../../shared/components/icons';
   styleUrls: ['./main-content.css'],
 })
 export class MainContent {
-  notes = inject(SidebarService);
+  notes = inject(ScratchpadNotes);
   toastr = inject(ToastrService);
   themeService = inject(ThemeService);
   themes = Theme;

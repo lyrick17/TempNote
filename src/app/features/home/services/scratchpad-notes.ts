@@ -1,13 +1,12 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { NoteItem, noteItemTemp } from '../../model/note-item';
 import { ToastrService } from 'ngx-toastr';
-import { stripHtml } from '../../../../utils/utils';
+import { NoteItem, noteItemTemp } from '../model/note-item';
+import { stripHtml } from '../../../utils/utils';
 
-//! DEPRECATED
 @Injectable({
   providedIn: 'root',
 })
-export class SidebarService {
+export class ScratchpadNotes {
   latestId = 0; // for tracking of the id per each note item
 
   toastr = inject(ToastrService);

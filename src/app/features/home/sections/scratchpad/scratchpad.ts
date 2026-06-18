@@ -1,16 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NoteItem } from '../../model/note-item';
-import { Icons } from '../../../../shared/components/icons';
+import { Component, inject } from '@angular/core';
+import { MainContent } from '../../components/main-content/main-content';
+import { Sidebar } from '../../components/sidebar/sidebar';
 import { ScratchpadNotes } from '../../services/scratchpad-notes';
+import { NoteItem } from '../../model/note-item';
 
 @Component({
-  selector: 'app-sidebar',
-  imports: [CommonModule, ...Icons],
-  templateUrl: './sidebar.html',
-  styleUrls: ['./sidebar.css'],
+  selector: 'app-scratchpad',
+  imports: [MainContent, Sidebar],
+  templateUrl: './scratchpad.html',
+  styleUrl: './scratchpad.css',
 })
-export class Sidebar {
+export class Scratchpad {
   notes = inject(ScratchpadNotes);
 
   onClickNote(item: NoteItem) {

@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { Header } from '../../core/shell/header/header';
-import { Sidebar } from './components/sidebar/sidebar';
-import { MainContent } from './components/main-content/main-content';
-import { Footer } from '../../core/shell/footer/footer';
-import { Divider } from '../../core/shell/divider/divider';
+import { Scratchpad } from './sections/scratchpad/scratchpad';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Sidebar, MainContent, Footer, Divider],
+  imports: [Scratchpad],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })

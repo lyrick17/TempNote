@@ -1,23 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { provideToastr, ToastrService } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { SidebarService } from '../sidebar/sidebar.service';
 import { MainContent } from './main-content';
+import { ScratchpadNotes } from '../../services/scratchpad-notes';
 
 describe('Sidebar Service', () => {
-  let notes: SidebarService;
+  let notes: ScratchpadNotes;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MainContent],
       providers: [
-        SidebarService,
+        ScratchpadNotes,
         ToastrService,
         provideToastr(),
         provideAnimations(),
       ],
     });
-    notes = TestBed.inject(SidebarService);
+    notes = TestBed.inject(ScratchpadNotes);
   });
 
   it('should enable copy to clipboard button when entering text', () => {

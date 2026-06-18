@@ -1,5 +1,5 @@
 <header
-  class="flex flex-col items-center justify-center md:justify-between px-4 py-4"
+  class="relative flex flex-col items-center justify-center md:justify-between px-4 my-4"
 >
   <img src="logo.png" alt="TempNote Logo" class="w-20 h-20 rounded-2xl" />
 
@@ -11,5 +11,7 @@
     </p>
   </div>
 
-  <app-theme-toggle />
+  <div class="absolute top-0 right-0">
+    <app-theme-toggle />
+  </div>
 </header>
