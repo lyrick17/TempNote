@@ -1,3 +1,7 @@
 <div>
-  <app-scratchpad />
+  @if (homeTab.tabState() == "scratchpad") {
+    <app-scratchpad />
+  } @else {
+    <app-stash />
+  }
 </div>

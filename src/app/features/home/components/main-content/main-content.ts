@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { TextEditor } from '../text-editor/text-editor';
@@ -7,6 +7,14 @@ import { Theme } from '../../../../core/types/theme-toggle.type';
 import { stripHtml } from '../../../../utils/utils';
 import { Icons } from '../../../../shared/components/icons';
 import { ScratchpadNotes } from '../../services/scratchpad-notes';
+import { HomeTabState } from '../../services/home-tab-state';
+
+const BOTTOM_EDITOR_TEXTS = {
+  scratchpad:
+    'Note: All scratch notes written in TempNote will not be saved once you close the site.',
+  stash:
+    'Note: Clearing your browser cache or site data will delete your stashed notes.',
+};
 
 @Component({
   selector: 'app-main-content',
@@ -18,7 +26,13 @@ export class MainContent {
   notes = inject(ScratchpadNotes);
   toastr = inject(ToastrService);
   themeService = inject(ThemeService);
+  homeTab = inject(HomeTabState);
   themes = Theme;
+  bottomEditorText = computed(() =>
+    this.homeTab.tabState() === 'scratchpad'
+      ? BOTTOM_EDITOR_TEXTS.scratchpad
+      : BOTTOM_EDITOR_TEXTS.stash,
+  );
 
   onTextInput(value: string) {
     this.notes.currentNote.update((n) => ({

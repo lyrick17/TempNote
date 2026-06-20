@@ -1,6 +1,8 @@
 import {
   Component,
+  computed,
   effect,
+  inject,
   input,
   OnDestroy,
   OnInit,
@@ -13,6 +15,8 @@ import {
   Editor,
   Toolbar,
 } from 'ngx-editor';
+import { HomeTabState } from '../../services/home-tab-state';
+import { noImageSchema } from './no-image-schema';
 
 // Documentation of ngx-editor: https://sibiraj-s.github.io/ngx-editor/
 
@@ -24,18 +28,18 @@ import {
 })
 export class TextEditor implements OnInit, OnDestroy {
   editor!: Editor;
-  toolbar: Toolbar = [
-    // default value
+  homeTab = inject(HomeTabState);
+  toolbar = computed<Toolbar>(() => [
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['bold', 'italic', 'underline', 'strike'],
     ['code', 'blockquote'],
     ['ordered_list', 'bullet_list'],
-    ['link', 'image'],
+    this.homeTab.tabState() === 'scratchpad' ? ['link', 'image'] : ['link'],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
     ['horizontal_rule', 'format_clear', 'indent', 'outdent'],
     ['undo', 'redo'],
-  ];
+  ]);
 
   // middleman of value and valueChange
   html = '';
@@ -50,7 +54,10 @@ export class TextEditor implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.editor = new Editor();
+    this.editor = new Editor({
+      schema:
+        this.homeTab.tabState() == 'scratchpad' ? undefined : noImageSchema,
+    });
   }
 
   // make sure to destory the editor

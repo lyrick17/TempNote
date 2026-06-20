@@ -1,9 +1,10 @@
 <article class="mx-1 my-2 md:my-0 p-4 primary-color rounded-xl shadow-xl">
-  @for (item of notes.arrayNotes(); track item.id) {
+  @for (item of activeNotes().arrayNotes(); track item.id) {
     <div
       [ngClass]="{
-        'translucent-secondary-color': item.id != notes.currentNote().id,
-        'tertiary-color': item.id == notes.currentNote().id,
+        'translucent-secondary-color':
+          item.id != activeNotes().currentNote().id,
+        'tertiary-color': item.id == activeNotes().currentNote().id,
       }"
       class="cursor-pointer flex items-center justify-between rounded-md p-2 mb-1"
       (click)="onClickNote(item)"
@@ -38,7 +39,7 @@
     <div
       class="translucent-secondary-color text-center rounded-md px-2 py-10 mb-1"
     >
-      🌟All Your Notes will be displayed here.🌟
+      {{ emptyListText() }}
     </div>
   }
 </article>
