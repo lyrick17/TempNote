@@ -8,6 +8,7 @@ $primaryColor_light: #6b9080;
 $primaryColor_light_hover: #557566;
 $secondaryColor_light: #a4c3b2;
 $tertiaryColor_light: #f6fff8;
+$white_light: #f8f9fa;
 // $blue_light: #1b2f53;
 // $blue_light_hover: #152544;
 $blue_light: #4a6fb3;
@@ -20,6 +21,7 @@ $primaryColor_dark: #46645a;
 $primaryColor_dark_hover: #577a6e;
 $secondaryColor_dark: #32463d;
 $tertiaryColor_dark: #1a2220;
+$white_dark: #1e1e1e;
 $blue_dark: #4a6fb3;
 $blue_dark_hover: #5786d1;
 $red_dark: #b22222;
@@ -32,6 +34,7 @@ $red_dark: #b22222;
   --secondaryColor: #{$secondaryColor_light};
   --translucentSecondaryColor: #{rgba($secondaryColor_light, 0.8)};
   --tertiaryColor: #{$tertiaryColor_light};
+  --whiteColor: #{$white_light};
   --blueColor: #{$blue_light};
   --blueHoveredColor: #{$blue_light_hover};
   --redColor: #{$red_light};
@@ -47,6 +50,7 @@ $red_dark: #b22222;
   --secondaryColor: #{$secondaryColor_dark};
   --translucentSecondaryColor: #{rgba($secondaryColor_dark, 0.8)};
   --tertiaryColor: #{$tertiaryColor_dark};
+  --whiteColor: #{$white_dark};
   --blueColor: #{$blue_dark};
   --blueHoveredColor: #{$blue_dark_hover};
   --redColor: #{$red_dark};
@@ -80,6 +84,10 @@ body.light {
 
 .secondary-color {
   background-color: var(--secondaryColor);
+}
+
+.white-color {
+  background-color: var(--whiteColor);
 }
 
 .translucent-secondary-color {
