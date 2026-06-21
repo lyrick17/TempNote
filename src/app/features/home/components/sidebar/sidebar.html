@@ -1,4 +1,6 @@
-<article class="mx-1 my-2 md:my-0 p-4 primary-color rounded-xl shadow-xl">
+<article
+  class="mx-1 my-2 md:my-0 p-4 primary-color rounded-md shadow-xl max-h-50 md:max-h-[100dvh] overflow-y-auto custom-scrollbar"
+>
   @for (item of activeNotes().arrayNotes(); track item.id) {
     <div
       [ngClass]="{

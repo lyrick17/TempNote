@@ -118,6 +118,34 @@ body.light {
   border-color: var(--borderColor);
 }
 
+// Custom Scrollbar
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px !important;
+  background: transparent !important;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  // background:  !important;
+  border-radius: 9999px !important;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--translucentSecondaryColor) !important;
+  border-radius: 9999px !important;
+  border: none;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--translucentSecondaryColor) !important;
+  opacity: 30%;
+}
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.custom-scrollbar::-webkit-scrollbar-corner {
+  display: none !important;
+}
+
 // Text Component
 .NgxEditor__Content {
   h1 {
