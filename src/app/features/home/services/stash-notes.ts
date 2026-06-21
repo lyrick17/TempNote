@@ -1,6 +1,6 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { NoteItem, noteItemTemp } from '../model/note-item';
+import { NoteItem, noteItemTemp, StashedNoteItem } from '../model/note-item';
 import { stripHtml } from '../../../utils/utils';
 import { Notes } from '../model/notes';
 
@@ -8,21 +8,72 @@ import { Notes } from '../model/notes';
   providedIn: 'root',
 })
 export class StashNotes implements Notes {
-  MAX_STASHED = 30;
   latestId = 0; // for tracking of the id per each note item
+  // stash variables
+  MAX_STASHED = 30;
+  MAX_CHARACTER_LIMIT = 1500;
+  private timeout?: ReturnType<typeof setTimeout>;
 
   toastr = inject(ToastrService);
   currentNoteRef = { ...noteItemTemp }; // for tracking the previous state of currentNote
   currentNote = signal<NoteItem>({ ...noteItemTemp });
   notes = signal<Record<number, NoteItem>>({});
   arrayNotes = computed(() => Object.values(this.notes()));
+  currentNoteLength = computed(() => {
+    return this.currentNote().text.length;
+  });
+
   constructor() {
     this.initializeEffect();
+    this.initializeNotes();
   }
 
-  initializeEffect() {
+  private initializeNotes() {
+    let allStashedNotes: Record<number, NoteItem> = {};
+    let latestId = this.latestId;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('stash:')) {
+        const item = localStorage.getItem(key);
+        try {
+          const parsedItem: StashedNoteItem = JSON.parse(item ?? '');
+          const id = Number(key.split('stash:')[1]);
+          const text = stripHtml(parsedItem.content);
+          const content = parsedItem.content;
+          const title = parsedItem.title;
+          const type = parsedItem.type;
+          let note = { id, text, content, title, type };
+          allStashedNotes[Number(id)] = note;
+          if (id == 1) {
+            if (!this.currentNote().id && (content || title)) {
+              // set first stashed note as current note
+              this.currentNote.update((n) => ({
+                ...n,
+                id,
+                text,
+                content,
+                title,
+                type,
+              }));
+            }
+          }
+          if (latestId < id) {
+            latestId = id;
+          }
+        } catch (e) {
+          console.error('Cannot retrieve stashed note: ', e);
+        }
+      }
+    }
+    this.notes.update((n) => ({
+      ...allStashedNotes,
+    }));
+    this.latestId = latestId;
+  }
+
+  private initializeEffect() {
     effect(() => {
-      const text = stripHtml(this.currentNote().content).trim();
+      const text = stripHtml(this.currentNote().content);
       const isValidContent =
         !!text ||
         this.currentNote().content.includes('</ol>') ||
@@ -93,14 +144,28 @@ export class StashNotes implements Notes {
     title: string,
     type: '' | 'combined' | 'text' | 'image',
   ) {
+    let note = { id, text, content, title, type };
+    if (note.text.length > this.MAX_CHARACTER_LIMIT) {
+      return;
+    }
     this.notes.update((n) => ({
       ...n,
-      [id]: { id, text, content, title, type },
+      [id]: note,
     }));
-    this.currentNoteRef = { id, text, content, title, type };
+    this.currentNoteRef = note;
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.persistToLocalStorage(note);
+    }, 500);
   }
 
   createNewNote(shouldNotify: boolean = true) {
+    // Only limit to max stashed amount
+    if (this.arrayNotes().length >= this.MAX_STASHED) {
+      return;
+    }
+
+    // create note
     this.currentNote.set({ ...noteItemTemp });
 
     if (shouldNotify) {
@@ -126,6 +191,9 @@ export class StashNotes implements Notes {
     this.notes.update((n) => ({
       ...newNotes,
     }));
+    // delete from localStorage
+    localStorage.removeItem(`stash:${itemId}`);
+
     if (!isAutomatic) {
       this.toastr.info('Note deleted.');
     }
@@ -138,5 +206,17 @@ export class StashNotes implements Notes {
     // stop the user on leaving the page immediately if they have entered ntoes
     let numOfNotes = Object.keys(this.notes()).length;
     return numOfNotes > 0;
+  }
+
+  private persistToLocalStorage(note: NoteItem) {
+    localStorage.setItem(
+      `stash:${note.id}`,
+      JSON.stringify({
+        id: note.id,
+        title: note?.title ?? '',
+        content: note.content,
+        type: note.type,
+      }),
+    );
   }
 }

@@ -8,6 +8,8 @@ import { stripHtml } from '../../../../utils/utils';
 import { Icons } from '../../../../shared/components/icons';
 import { ScratchpadNotes } from '../../services/scratchpad-notes';
 import { HomeTabState } from '../../services/home-tab-state';
+import { StashNotes } from '../../services/stash-notes';
+import { Notes } from '../../model/notes';
 
 const BOTTOM_EDITOR_TEXTS = {
   scratchpad:
@@ -23,11 +25,18 @@ const BOTTOM_EDITOR_TEXTS = {
   styleUrls: ['./main-content.css'],
 })
 export class MainContent {
-  notes = inject(ScratchpadNotes);
   toastr = inject(ToastrService);
   themeService = inject(ThemeService);
   homeTab = inject(HomeTabState);
   themes = Theme;
+
+  scratchpadNotes = inject(ScratchpadNotes);
+  stashNotes = inject(StashNotes);
+  activeNotes = computed<Notes>(() =>
+    this.homeTab.tabState() === 'scratchpad'
+      ? this.scratchpadNotes
+      : this.stashNotes,
+  );
   bottomEditorText = computed(() =>
     this.homeTab.tabState() === 'scratchpad'
       ? BOTTOM_EDITOR_TEXTS.scratchpad
@@ -35,41 +44,52 @@ export class MainContent {
   );
 
   onTextInput(value: string) {
-    this.notes.currentNote.update((n) => ({
+    const text = stripHtml(value);
+    if (
+      this.homeTab.tabState() === 'stash' &&
+      text.length > this.stashNotes.MAX_CHARACTER_LIMIT
+    ) {
+      return;
+    }
+    this.activeNotes().currentNote.update((n) => ({
       ...n,
       content: value,
+      text: stripHtml(value),
     }));
   }
 
   onTitleInput(value: string) {
-    this.notes.currentNote.update((n) => ({
+    this.activeNotes().currentNote.update((n) => ({
       ...n,
       title: value,
     }));
   }
 
   createNewNote() {
-    if (!this.notes.currentNote().content && !this.notes.currentNote().title) {
+    if (
+      !this.activeNotes().currentNote().content &&
+      !this.activeNotes().currentNote().title
+    ) {
       // Do not create a new note if there is no text on the current note
       return;
     }
 
-    this.notes.createNewNote();
+    this.activeNotes().createNewNote();
   }
 
   copyNote() {
     if (
-      this.notes.currentNote().content.length <= 0 ||
-      this.notes.currentNote().text.length <= 0
+      this.activeNotes().currentNote().content.length <= 0 ||
+      this.activeNotes().currentNote().text.length <= 0
     ) {
       return;
     }
 
     try {
-      const htmlBlob = new Blob([this.notes.currentNote().content], {
+      const htmlBlob = new Blob([this.activeNotes().currentNote().content], {
         type: 'text/html',
       });
-      const textBlob = new Blob([this.notes.currentNote().text], {
+      const textBlob = new Blob([this.activeNotes().currentNote().text], {
         type: 'text/plain',
       });
 
@@ -89,11 +109,11 @@ export class MainContent {
 
   //! Deprecated: Export Feature is removed for now as of v2.2
   downloadNoteAsTextFile() {
-    if (!this.notes.currentNote().text) {
+    if (!this.activeNotes().currentNote().text) {
       this.toastr.error('Unable to download an empty note.');
       return;
     }
-    const blob = new Blob([stripHtml(this.notes.currentNote().text)], {
+    const blob = new Blob([stripHtml(this.activeNotes().currentNote().text)], {
       type: 'text/plain',
     });
     const url = window.URL.createObjectURL(blob);

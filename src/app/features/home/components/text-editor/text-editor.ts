@@ -14,9 +14,14 @@ import {
   NgxEditorMenuComponent,
   Editor,
   Toolbar,
+  toHTML,
 } from 'ngx-editor';
 import { HomeTabState } from '../../services/home-tab-state';
-import { noImageSchema } from './no-image-schema';
+import {
+  stashNotePlugin,
+  stashNoteSchema,
+} from '../../../../utils/text-editor-options';
+import { StashNotes } from '../../services/stash-notes';
 
 // Documentation of ngx-editor: https://sibiraj-s.github.io/ngx-editor/
 
@@ -29,6 +34,7 @@ import { noImageSchema } from './no-image-schema';
 export class TextEditor implements OnInit, OnDestroy {
   editor!: Editor;
   homeTab = inject(HomeTabState);
+  stashNote = inject(StashNotes);
   toolbar = computed<Toolbar>(() => [
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['bold', 'italic', 'underline', 'strike'],
@@ -56,7 +62,16 @@ export class TextEditor implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.editor = new Editor({
       schema:
-        this.homeTab.tabState() == 'scratchpad' ? undefined : noImageSchema,
+        this.homeTab.tabState() == 'scratchpad' ? undefined : stashNoteSchema,
+      plugins:
+        this.homeTab.tabState() == 'scratchpad'
+          ? undefined
+          : [stashNotePlugin(this.stashNote.MAX_CHARACTER_LIMIT)],
+    });
+    this.editor.valueChanges.subscribe((doc) => {
+      const html = toHTML(doc);
+      this.html = html;
+      this.valueChange.emit(html);
     });
   }
 

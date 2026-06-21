@@ -19,9 +19,9 @@ export class ScratchpadNotes implements Notes {
     this.initializeEffect();
   }
 
-  initializeEffect() {
+  private initializeEffect() {
     effect(() => {
-      const text = stripHtml(this.currentNote().content).trim();
+      const text = stripHtml(this.currentNote().content);
       const isValidContent =
         !!text ||
         this.currentNote().content.includes('</ol>') ||

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MainContent } from '../../components/main-content/main-content';
 import { Sidebar } from '../../components/sidebar/sidebar';
+import { StashNotes } from '../../services/stash-notes';
 
 @Component({
   selector: 'app-stash',
@@ -8,4 +9,6 @@ import { Sidebar } from '../../components/sidebar/sidebar';
   templateUrl: './stash.html',
   styleUrl: './stash.css',
 })
-export class Stash {}
+export class Stash {
+  stashNotes = inject(StashNotes);
+}

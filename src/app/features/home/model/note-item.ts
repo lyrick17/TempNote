@@ -6,6 +6,10 @@ export interface NoteItem {
   type: 'text' | 'image' | 'combined' | '';
 }
 
+export interface StashedNoteItem extends Omit<NoteItem, 'text' | 'title'> {
+  title: string;
+}
+
 export const noteItemTemp: NoteItem = {
   id: null,
   title: '',
