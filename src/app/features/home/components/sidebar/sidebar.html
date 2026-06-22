@@ -1,0 +1,47 @@
+<article
+  class="mx-1 my-2 md:my-0 p-4 bg-[var(--primaryColor)] rounded-md shadow-xl max-h-50 md:max-h-[100dvh] overflow-y-auto custom-scrollbar"
+>
+  @for (item of activeNotes().arrayNotes(); track item.id) {
+    <div
+      [ngClass]="{
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]':
+          item.id != activeNotes().currentNote().id,
+        'bg-[var(--tertiaryColor)]': item.id == activeNotes().currentNote().id,
+      }"
+      class="cursor-pointer transition-colors flex items-center justify-between rounded-md p-2 mb-1"
+      (click)="onClickNote(item)"
+    >
+      <div class="flex gap-1 items-center truncate text-ellipsis">
+        @if (item.type == "combined" || item.type == "") {
+          <app-file-icon />
+        } @else if (item.type == "text") {
+          <app-file-text-icon />
+        } @else {
+          <app-file-image-icon />
+        }
+        <span class="">
+          {{
+            item.title ||
+              item.text ||
+              (item.content.includes("&lt;img src") ? "Image Attached" : "")
+          }}
+        </span>
+      </div>
+      <button
+        (click)="onDeleteNote(item, $event)"
+        class="cursor-pointer hover:bg-gray-200/50 p-2 rounded-full transition"
+      >
+        <app-delete-icon
+          style="color: var(--redColor)"
+          fill="var(--redColor)"
+        />
+      </button>
+    </div>
+  } @empty {
+    <div
+      class="bg-[var(--translucentSecondaryColor)] text-center rounded-md px-2 py-10 mb-1"
+    >
+      {{ emptyListText() }}
+    </div>
+  }
+</article>

@@ -1,0 +1,22 @@
+<div class="flex flex-col md:flex-row">
+  <div class="md:w-1/4">
+    @if (stashNotes.arrayNotes().length > stashNotes.MAX_STASHED / 2) {
+      <aside
+        class="mx-1 my-2 md:mb-2 md:mt-0 p-2 flex flex-col items-end rounded-md bg-[var(--translucentSecondaryColor)]"
+      >
+        {{ stashNotes.arrayNotes().length }} /
+        {{ stashNotes.MAX_STASHED }} notes
+      </aside>
+    }
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="md:w-3/4">
+    <aside
+      class="mx-1 my-2 md:mb-2 md:mt-0 p-2 flex flex-col items-start rounded-md bg-[var(--translucentSecondaryColor)]"
+    >
+      Your stashed notes are stored locally and won't disappear when you leave.
+      Images are not supported.
+    </aside>
+    <app-main-content></app-main-content>
+  </div>
+</div>

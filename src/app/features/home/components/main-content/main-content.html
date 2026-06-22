@@ -1,0 +1,75 @@
+<article
+  class="mx-1 my-2 md:my-0 p-4 flex flex-col items-end rounded-md bg-[var(--secondaryColor)] shadow-xl"
+>
+  <section class="flex justify-between w-full mb-2">
+    <div class="flex gap-1 md:gap-3 items-center">
+      <input
+        name="title"
+        type="text"
+        [(ngModel)]="activeNotes().currentNote().title"
+        (ngModelChange)="onTitleInput($event)"
+        class="border-b w-full min-w-0 md:max-w-75 placeholder:text-grey-400 focus:outline-none focus:ring-0 px-2"
+        [class]="
+          themeService.currentTheme === themes.DARK
+            ? 'text-[#252627] bg-[#f6fff8] border-gray-200 rounded-md'
+            : ''
+        "
+        placeholder="Enter note title here..."
+      />
+      <button
+        name="copy-note"
+        (click)="copyNote()"
+        class="flex gap-1 items-center bg-[var(--blueColor)] cursor-pointer hover:bg-[var(--blueHoveredColor)] transition-colors text-white text-xs rounded-md px-2 py-1 disabled:opacity-50 disabled:pointer-events-none"
+        [disabled]="
+          activeNotes().currentNote().text.length <= 0 ||
+          activeNotes().currentNote().content.length <= 0
+        "
+      >
+        <app-clipboard-icon />
+        Copy
+      </button>
+    </div>
+    <button
+      name="add-note"
+      (click)="createNewNote()"
+      class="bg-[var(--primaryColor)] cursor-pointer transition-colors hover:bg-[var(--primaryHoveredColor)] rounded-md px-4 py-2 disabled:opacity-50 disabled:pointer-events-none"
+      [disabled]="
+        activeNotes().currentNote().text.length <= 0 ||
+        activeNotes().currentNote().content.length <= 0
+      "
+    >
+      <app-plus-icon fill="var(--textColor)" />
+    </button>
+  </section>
+  <text-editor
+    [value]="activeNotes().currentNote().content"
+    (valueChange)="onTextInput($event)"
+    class="w-full border bg-[var(--tertiaryColor)] border-[var(--primaryColor)] rounded"
+  ></text-editor>
+  <div class="py-1 pe-1">
+    <small class="italic">
+      @if (activeNotes(); as notes) {
+        @if (
+          homeTab.tabState() === "stash" &&
+          notes.currentNoteLength &&
+          notes.currentNoteLength() > 50
+        ) {
+          <p class="text-right">
+            {{ notes.currentNoteLength() }} /
+            {{ stashNotes.MAX_CHARACTER_LIMIT }} characters
+          </p>
+        }
+      }
+      <p>
+        {{ bottomEditorText() }}
+      </p>
+    </small>
+  </div>
+  <!-- <button
+    (click)="downloadNoteAsTextFile()"
+    class="flex items-center bg-[var(--blueColor)] cursor-pointer text-white rounded-md px-4 py-2"
+  >
+    <app-download-icon style="color: white" fill="white" />
+    <span class="pl-2">Export Note</span>
+  </button> -->
+</article>

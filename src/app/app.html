@@ -1,6 +1,13 @@
-<main>
+<div class="flex flex-col h-screen px-4 md:px-16">
+  <app-header />
+  <app-navigation />
+  <app-divider />
 
-  <app-home></app-home>
+  <div class="py-4 flex-grow">
+    <router-outlet />
+  </div>
 
-</main>
-<!-- <router-outlet /> -->
+  <!-- Divider -->
+  <app-divider />
+  <app-footer />
+</div>

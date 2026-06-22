@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import { provideToastr } from 'ngx-toastr';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideToastr()],
+      providers: [provideToastr(), provideRouter(routes)],
     }).compileComponents();
   });
 
