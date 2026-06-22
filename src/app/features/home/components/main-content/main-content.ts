@@ -22,7 +22,7 @@ const BOTTOM_EDITOR_TEXTS = {
   selector: 'app-main-content',
   imports: [FormsModule, TextEditor, ...Icons],
   templateUrl: './main-content.html',
-  styleUrls: ['./main-content.css'],
+  styleUrls: [],
 })
 export class MainContent {
   toastr = inject(ToastrService);
