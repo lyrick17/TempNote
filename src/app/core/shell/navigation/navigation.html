@@ -1,21 +1,24 @@
 <nav class="flex flex-col md:flex-row gap-2 w-full px-4 mb-4">
   @if (isHome()) {
     <button
-      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer"
+      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer transition-colors"
       [ngClass]="{
-        'tertiary-color border-2 border-color':
+        'bg-[var(--creamColor)] text-[#252627] border-2 border-[var(--primaryColor)]':
           homeTab.tabState() == 'scratchpad',
-        'translucent-secondary-color': homeTab.tabState() == 'stash',
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]':
+          homeTab.tabState() == 'stash',
       }"
       (click)="setHomeTab('scratchpad')"
     >
       Scratchpad
     </button>
     <button
-      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer"
+      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer transition-colors"
       [ngClass]="{
-        'tertiary-color border-2 border-color': homeTab.tabState() == 'stash',
-        'translucent-secondary-color': homeTab.tabState() == 'scratchpad',
+        'bg-[var(--creamColor)] text-[#252627] border-2 border-[var(--primaryColor)]':
+          homeTab.tabState() == 'stash',
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]':
+          homeTab.tabState() == 'scratchpad',
       }"
       (click)="setHomeTab('stash')"
     >
@@ -23,38 +26,40 @@
     </button>
   } @else {
     <button
-      class="rounded-full translucent-secondary-color px-3 py-1 cursor-pointer"
+      class="rounded-full bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)] px-3 py-1 cursor-pointer transition-colors"
       routerLink="/"
     >
       ← Back to Notes
     </button>
     <!-- <button
-      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer"
+      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer transition-colors"
       [ngClass]="{
-        'tertiary-color border-2 border-color': currentUrl() == '/about',
-        'translucent-secondary-color': currentUrl() != '/about',
+        'bg-[var(--creamColor)] text-[#252627] border-2 border-[var(--primaryColor)]': currentUrl() == '/about',
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]': currentUrl() != '/about',
       }"
       routerLink="/about"
     >
       About
     </button> -->
     <button
-      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer"
+      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer transition-colors"
       [ngClass]="{
-        'tertiary-color border-2 border-color':
+        'bg-[var(--creamColor)] text-[#252627] border-2 border-[var(--primaryColor)]':
           currentUrl() == '/privacy-policy',
-        'translucent-secondary-color': currentUrl() != '/privacy-policy',
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]':
+          currentUrl() != '/privacy-policy',
       }"
       routerLink="/privacy-policy"
     >
       Privacy Policy
     </button>
     <button
-      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer"
+      class="rounded-full w-full flex-1 px-3 py-1 cursor-pointer transition-colors"
       [ngClass]="{
-        'tertiary-color border-2 border-color':
+        'bg-[var(--creamColor)] text-[#252627] border-2 border-[var(--primaryColor)]':
           currentUrl() == '/terms-and-conditions',
-        'translucent-secondary-color': currentUrl() != '/terms-and-conditions',
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]':
+          currentUrl() != '/terms-and-conditions',
       }"
       routerLink="/terms-and-conditions"
     >

@@ -1,5 +1,5 @@
 <article
-  class="mx-1 my-2 md:my-0 p-4 flex flex-col items-end rounded-md secondary-color shadow-xl"
+  class="mx-1 my-2 md:my-0 p-4 flex flex-col items-end rounded-md bg-[var(--secondaryColor)] shadow-xl"
 >
   <section class="flex justify-between w-full mb-2">
     <div class="flex gap-1 md:gap-3 items-center">
@@ -19,7 +19,7 @@
       <button
         name="copy-note"
         (click)="copyNote()"
-        class="flex gap-1 items-center blue-color text-white text-xs rounded-md px-2 py-1 disabled:opacity-50 disabled:pointer-events-none"
+        class="flex gap-1 items-center bg-[var(--blueColor)] cursor-pointer hover:bg-[var(--blueHoveredColor)] transition-colors text-white text-xs rounded-md px-2 py-1 disabled:opacity-50 disabled:pointer-events-none"
         [disabled]="
           activeNotes().currentNote().text.length <= 0 ||
           activeNotes().currentNote().content.length <= 0
@@ -32,7 +32,7 @@
     <button
       name="add-note"
       (click)="createNewNote()"
-      class="primary-color rounded-md px-4 py-2 disabled:opacity-50 disabled:pointer-events-none"
+      class="bg-[var(--primaryColor)] cursor-pointer transition-colors hover:bg-[var(--primaryHoveredColor)] rounded-md px-4 py-2 disabled:opacity-50 disabled:pointer-events-none"
       [disabled]="
         activeNotes().currentNote().text.length <= 0 ||
         activeNotes().currentNote().content.length <= 0
@@ -44,7 +44,7 @@
   <text-editor
     [value]="activeNotes().currentNote().content"
     (valueChange)="onTextInput($event)"
-    class="w-full border tertiary-color border-color rounded"
+    class="w-full border bg-[var(--tertiaryColor)] border-[var(--primaryColor)] rounded"
   ></text-editor>
   <div class="py-1 pe-1">
     <small class="italic">
@@ -67,7 +67,7 @@
   </div>
   <!-- <button
     (click)="downloadNoteAsTextFile()"
-    class="flex items-center blue-color text-white rounded-md px-4 py-2"
+    class="flex items-center bg-[var(--blueColor)] cursor-pointer text-white rounded-md px-4 py-2"
   >
     <app-download-icon style="color: white" fill="white" />
     <span class="pl-2">Export Note</span>

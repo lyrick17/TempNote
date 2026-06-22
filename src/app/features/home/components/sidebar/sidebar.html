@@ -1,14 +1,14 @@
 <article
-  class="mx-1 my-2 md:my-0 p-4 primary-color rounded-md shadow-xl max-h-50 md:max-h-[100dvh] overflow-y-auto custom-scrollbar"
+  class="mx-1 my-2 md:my-0 p-4 bg-[var(--primaryColor)] rounded-md shadow-xl max-h-50 md:max-h-[100dvh] overflow-y-auto custom-scrollbar"
 >
   @for (item of activeNotes().arrayNotes(); track item.id) {
     <div
       [ngClass]="{
-        'translucent-secondary-color':
+        'bg-[var(--translucentSecondaryColor)] hover:bg-[var(--secondaryHoveredColor)]':
           item.id != activeNotes().currentNote().id,
-        'tertiary-color': item.id == activeNotes().currentNote().id,
+        'bg-[var(--tertiaryColor)]': item.id == activeNotes().currentNote().id,
       }"
-      class="cursor-pointer flex items-center justify-between rounded-md p-2 mb-1"
+      class="cursor-pointer transition-colors flex items-center justify-between rounded-md p-2 mb-1"
       (click)="onClickNote(item)"
     >
       <div class="flex gap-1 items-center truncate text-ellipsis">
@@ -39,7 +39,7 @@
     </div>
   } @empty {
     <div
-      class="translucent-secondary-color text-center rounded-md px-2 py-10 mb-1"
+      class="bg-[var(--translucentSecondaryColor)] text-center rounded-md px-2 py-10 mb-1"
     >
       {{ emptyListText() }}
     </div>
