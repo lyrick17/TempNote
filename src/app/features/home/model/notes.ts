@@ -7,6 +7,7 @@ export interface Notes {
   notes: WritableSignal<Record<number, NoteItem>>;
   arrayNotes: Signal<NoteItem[]>;
   currentNoteLength?: Signal<number>;
+  noteUsagePercent?: Signal<number>;
   createNewNote(shouldNotify?: boolean): void;
   deleteNote(itemId?: number | null, isAutomatic?: boolean): void;
   hasNotes(): boolean;

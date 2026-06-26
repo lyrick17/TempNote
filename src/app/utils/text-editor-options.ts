@@ -16,7 +16,7 @@ export const stashNotePlugin = (maxCharacter: number) =>
       if (!tr.docChanged) return true;
 
       // Calculate character count after this keystroke/paste
-      const currentLength = tr.doc.textContent.length;
+      const currentLength = tr.doc.content.size;
 
       // Allow transaction only if it stays under the limit
       return currentLength <= maxCharacter;

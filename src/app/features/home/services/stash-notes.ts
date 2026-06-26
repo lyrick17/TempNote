@@ -11,7 +11,7 @@ export class StashNotes implements Notes {
   latestId = 0; // for tracking of the id per each note item
   // stash variables
   MAX_STASHED = 30;
-  MAX_CHARACTER_LIMIT = 1500;
+  MAX_HTML_CHAR_LIMIT = 85000;
   private timeout?: ReturnType<typeof setTimeout>;
 
   toastr = inject(ToastrService);
@@ -20,8 +20,11 @@ export class StashNotes implements Notes {
   notes = signal<Record<number, NoteItem>>({});
   arrayNotes = computed(() => Object.values(this.notes()));
   currentNoteLength = computed(() => {
-    return this.currentNote().text.length;
+    return this.currentNote().content.length;
   });
+  noteUsagePercent = computed(() =>
+    Math.round((this.currentNoteLength() / this.MAX_HTML_CHAR_LIMIT) * 100),
+  );
 
   constructor() {
     this.initializeEffect();
@@ -145,7 +148,7 @@ export class StashNotes implements Notes {
     type: '' | 'combined' | 'text' | 'image',
   ) {
     let note = { id, text, content, title, type };
-    if (note.text.length > this.MAX_CHARACTER_LIMIT) {
+    if (note.content.length > this.MAX_HTML_CHAR_LIMIT) {
       return;
     }
     this.notes.update((n) => ({

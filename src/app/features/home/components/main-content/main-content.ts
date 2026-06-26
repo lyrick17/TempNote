@@ -44,17 +44,15 @@ export class MainContent {
   );
 
   onTextInput(value: string) {
-    const text = stripHtml(value);
     if (
       this.homeTab.tabState() === 'stash' &&
-      text.length > this.stashNotes.MAX_CHARACTER_LIMIT
+      value.length > this.stashNotes.MAX_HTML_CHAR_LIMIT
     ) {
       return;
     }
     this.activeNotes().currentNote.update((n) => ({
       ...n,
       content: value,
-      text: stripHtml(value),
     }));
   }
 

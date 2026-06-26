@@ -47,23 +47,30 @@
     class="w-full border bg-[var(--tertiaryColor)] border-[var(--primaryColor)] rounded"
   ></text-editor>
   <div class="py-1 pe-1">
-    <small class="italic">
+    <span class="italic">
       @if (activeNotes(); as notes) {
         @if (
           homeTab.tabState() === "stash" &&
           notes.currentNoteLength &&
-          notes.currentNoteLength() > 50
+          notes.noteUsagePercent &&
+          notes.currentNoteLength() > stashNotes.MAX_HTML_CHAR_LIMIT / 2
         ) {
-          <p class="text-right">
-            {{ notes.currentNoteLength() }} /
-            {{ stashNotes.MAX_CHARACTER_LIMIT }} characters
+          <p
+            class="text-right"
+            [class]="
+              notes.noteUsagePercent() >= 70
+                ? 'text-[var(--redColor)] text-lg'
+                : 'text-sm'
+            "
+          >
+            {{ notes.noteUsagePercent() }}% full
           </p>
         }
       }
-      <p>
+      <p class="text-sm">
         {{ bottomEditorText() }}
       </p>
-    </small>
+    </span>
   </div>
   <!-- <button
     (click)="downloadNoteAsTextFile()"

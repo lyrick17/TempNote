@@ -66,7 +66,7 @@ export class TextEditor implements OnInit, OnDestroy {
       plugins:
         this.homeTab.tabState() == 'scratchpad'
           ? undefined
-          : [stashNotePlugin(this.stashNote.MAX_CHARACTER_LIMIT)],
+          : [stashNotePlugin(this.stashNote.MAX_HTML_CHAR_LIMIT)],
     });
     this.editor.valueChanges.subscribe((doc) => {
       const html = toHTML(doc);
