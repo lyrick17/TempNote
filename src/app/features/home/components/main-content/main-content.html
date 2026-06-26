@@ -8,7 +8,7 @@
         type="text"
         [(ngModel)]="activeNotes().currentNote().title"
         (ngModelChange)="onTitleInput($event)"
-        class="border-b w-full min-w-0 md:max-w-75 placeholder:text-grey-400 focus:outline-none focus:ring-0 px-2"
+        class="border-b w-full min-w-0 md:min-w-75 placeholder:text-grey-400 focus:outline-none focus:ring-0 px-2"
         [class]="
           themeService.currentTheme === themes.DARK
             ? 'text-[#252627] bg-[#f6fff8] border-gray-200 rounded-md'
