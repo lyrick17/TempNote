@@ -42,6 +42,14 @@ export class MainContent {
       ? BOTTOM_EDITOR_TEXTS.scratchpad
       : BOTTOM_EDITOR_TEXTS.stash,
   );
+  isAddButtonDisabled = computed(() => {
+    const n = this.activeNotes().currentNote();
+    return !n.text.length && !n.content.length && !n.title;
+  });
+  isCopyButtonDisabled = computed(() => {
+    const n = this.activeNotes().currentNote();
+    return !n.text.length && !n.content.length;
+  });
 
   onTextInput(value: string) {
     if (
@@ -69,6 +77,7 @@ export class MainContent {
       !this.activeNotes().currentNote().title
     ) {
       // Do not create a new note if there is no text on the current note
+      this.toastr.error('Unable to create a new note.');
       return;
     }
 
@@ -80,6 +89,7 @@ export class MainContent {
       this.activeNotes().currentNote().content.length <= 0 ||
       this.activeNotes().currentNote().text.length <= 0
     ) {
+      this.toastr.error('Unable to copy an empty note.');
       return;
     }
 

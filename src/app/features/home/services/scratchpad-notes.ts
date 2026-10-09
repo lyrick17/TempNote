@@ -30,7 +30,6 @@ export class ScratchpadNotes implements Notes {
       const content = isValidContent ? this.currentNote().content : '';
       const title = this.currentNote().title ?? '';
       const type = this.determineNoteType({ text, content, title });
-
       if (!this.currentNote().id && (content || title)) {
         // Current Note is newly created, and has content
         const newId = this.incrementAndReturnId();
@@ -47,6 +46,7 @@ export class ScratchpadNotes implements Notes {
         // Note is being updated
         // Find the note then update its text, unless its empty, delete it instead
         if (content || title) {
+          this.currentNote().text = text;
           this.updateNote(this.currentNote().id!, text, content, title, type);
         } else if (
           (this.currentNoteRef.text && this.currentNoteRef.content) ||

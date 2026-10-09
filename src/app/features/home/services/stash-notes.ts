@@ -102,6 +102,7 @@ export class StashNotes implements Notes {
         // Note is being updated
         // Find the note then update its text, unless its empty, delete it instead
         if (content || title) {
+          this.currentNote().text = text;
           this.updateNote(this.currentNote().id!, text, content, title, type);
         } else if (
           (this.currentNoteRef.text && this.currentNoteRef.content) ||
