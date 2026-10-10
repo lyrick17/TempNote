@@ -1,6 +1,7 @@
 @use "tailwindcss";
 @use "ngx-toastr/toastr" as toastr;
 @import url("https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
 $bgColor_light: #cce3de;
 $textColor_light: #252627; // Eerie Black
@@ -17,6 +18,8 @@ $cream_light_hover: #ede9c3;
 $blue_light: #4a6fb3;
 $blue_light_hover: #5786d1;
 $red_light: #8b0000;
+$document_light_bg: #ffffff;
+$document_light_text: #1f2933;
 
 $bgColor_dark: #243533;
 $textColor_dark: #dcefe6;
@@ -33,6 +36,8 @@ $gray_dark_hover: #3a4d46;
 $cream_dark: #d9d4b0;
 $cream_dark_hover: #ccc896;
 $red_dark: #b22222;
+$document_dark_bg: #1c211e;
+$document_dark_text: #e6e6e6;
 
 @mixin lighten() {
   --bgColor: #{$bgColor_light};
@@ -60,6 +65,9 @@ $red_dark: #b22222;
   --blueHoveredColor: #{$blue_light_hover};
 
   --redColor: #{$red_light};
+
+  --documentBackgroundColor: #{$document_light_bg};
+  --documentTextColor: #{$document_light_text};
 }
 
 // mixin that enables css variables in dark mode
@@ -89,6 +97,14 @@ $red_dark: #b22222;
   --blueHoveredColor: #{$blue_dark_hover};
 
   --redColor: #{$red_dark};
+
+  --documentBackgroundColor: #{$document_dark_bg};
+  --documentTextColor: #{$document_dark_text};
+}
+
+@theme {
+  --font-body: "Sour Gummy", sans-serif;
+  --font-doc: "Source Sans 3", sans-serif;
 }
 
 :root {
@@ -96,7 +112,7 @@ $red_dark: #b22222;
 }
 
 body {
-  font-family: "Sour Gummy", sans-serif;
+  font-family: var(--font-body);
 }
 
 body.dark {
@@ -140,6 +156,9 @@ body.light {
 
 // Text Component
 .NgxEditor__Content {
+  font-family: var(--font-doc);
+  background-color: var(--documentBackgroundColor);
+  color: var(--documentTextColor);
   h1 {
     font-size: 2.25rem;
     font-weight: 700;

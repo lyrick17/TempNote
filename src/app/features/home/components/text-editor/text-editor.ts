@@ -6,6 +6,7 @@ import {
   input,
   OnDestroy,
   OnInit,
+  AfterViewInit,
   output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -31,7 +32,7 @@ import { StashNotes } from '../../services/stash-notes';
   standalone: true,
   imports: [NgxEditorComponent, NgxEditorMenuComponent, FormsModule],
 })
-export class TextEditor implements OnInit, OnDestroy {
+export class TextEditor implements OnInit, AfterViewInit, OnDestroy {
   editor!: Editor;
   homeTab = inject(HomeTabState);
   stashNote = inject(StashNotes);
@@ -57,6 +58,10 @@ export class TextEditor implements OnInit, OnDestroy {
     effect(() => {
       this.html = this.value();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.editor.commands.focus().exec();
   }
 
   ngOnInit(): void {

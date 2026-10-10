@@ -4,6 +4,7 @@ export interface NoteItem {
   text: string;
   content: string;
   type: 'text' | 'image' | 'combined' | '';
+  last_updated?: Date;
 }
 
 export interface StashedNoteItem extends Omit<NoteItem, 'text' | 'title'> {
@@ -16,4 +17,5 @@ export const noteItemTemp: NoteItem = {
   text: '',
   content: '',
   type: '',
+  last_updated: new Date(),
 };

@@ -96,6 +96,7 @@ export class StashNotes implements Notes {
           content,
           title,
           type,
+          last_updated: new Date(),
         }));
         this.updateNote(newId, text, content, title, type);
       } else if (this.currentNote().id) {
@@ -103,6 +104,7 @@ export class StashNotes implements Notes {
         // Find the note then update its text, unless its empty, delete it instead
         if (content || title) {
           this.currentNote().text = text;
+          this.currentNote().last_updated = new Date();
           this.updateNote(this.currentNote().id!, text, content, title, type);
         } else if (
           (this.currentNoteRef.text && this.currentNoteRef.content) ||
@@ -148,7 +150,7 @@ export class StashNotes implements Notes {
     title: string,
     type: '' | 'combined' | 'text' | 'image',
   ) {
-    let note = { id, text, content, title, type };
+    let note = { id, text, content, title, type, last_updated: new Date() };
     if (note.content.length > this.MAX_HTML_CHAR_LIMIT) {
       return;
     }

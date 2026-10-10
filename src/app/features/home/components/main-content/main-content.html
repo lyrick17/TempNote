@@ -25,6 +25,19 @@
         <app-clipboard-icon />
         Copy
       </button>
+      <span>
+        @if (
+          activeNotes().currentNote().id != null &&
+          homeTab.tabState() === "stash"
+        ) {
+          <p class="text-xs italic lg:whitespace-nowrap">
+            Last Updated:
+            {{
+              activeNotes().currentNote().last_updated | date: "MMM dd, yyyy"
+            }}
+          </p>
+        }
+      </span>
     </div>
     <button
       name="add-note"

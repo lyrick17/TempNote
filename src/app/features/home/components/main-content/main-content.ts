@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { TextEditor } from '../text-editor/text-editor';
 import { ThemeService } from '../../../../core/services/theme.service';
@@ -20,7 +21,7 @@ const BOTTOM_EDITOR_TEXTS = {
 
 @Component({
   selector: 'app-main-content',
-  imports: [FormsModule, TextEditor, ...Icons],
+  imports: [FormsModule, TextEditor, DatePipe, ...Icons],
   templateUrl: './main-content.html',
   styleUrls: [],
 })
